@@ -17,7 +17,8 @@ public class RandomHello {
     /** @return a greeting, randomly chosen from five possibilities */
     public String getGreeting() {
         Random randomGenerator = new Random();
-        String[] greeting = {"Hello World","Hola Mundo", "Bonjour Monde", "Hallo Welt", "Ciao Mondo"};
+        String[] greeting = {"Hello World","Hola Mundo", "Bonjour Monde",
+                "Hallo Welt", "Ciao Mondo"};
         return greeting[randomGenerator.nextInt(5)];
     }
 }
