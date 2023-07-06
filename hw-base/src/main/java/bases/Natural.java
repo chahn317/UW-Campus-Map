@@ -405,14 +405,18 @@ public class Natural {
         // (1) At this point in the code, we know that
         // this.value + other.value = D[0] + D[1] b + ... + D[n] b^n
         // This implies the postcondition that we are returning
-        // (this.base, this.value + other.value) since
-        // this.value + other.value is the value represented by newDigits.
+        // (this.base, this.value + other.value) since we are returning
+        // (this.base, newDigits) and this.value + other.value is the value
+        // represented by newDigits.
         // (2) newDigits has the same base this.base and other.base, which
         // was valid, so 2 <= base <= 36.
         // newDigits.length = this.digits.length + 1, so newDigits.length >= 1.
         // At this point, we know that D[0] < b, D[1] < b, ..., D[i-1] < b
-        // and i = n, so D[0] < b, D[1] < b, ..., D[n-1] < b and all digits
-        // are between 0 and base - 1.
+        // and i = n, so D[0] < b, D[1] < b, ..., D[n-1] < b. Additionally,
+        // any element of D must be >= 0 since we only modify D by adding
+        // this.value + other.value, which already fulfills the precondition,
+        // or by subtracting base when D[i] >= base. Thus, all elements of D
+        // are between 0 and base - 1 inclusive.
         // Thus, the preconditions of the constructor hold.
 
         return new Natural(this.base, newDigits);
