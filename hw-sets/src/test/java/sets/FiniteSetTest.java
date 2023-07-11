@@ -64,10 +64,16 @@ public class FiniteSetTest {
   /** A "singleton" set. */
   private static FiniteSet S1 = FiniteSet.of(new float[] {1});
 
+  private static FiniteSet S2 = FiniteSet.of(new float[] {2});
+
   /** A "complex" set. Or, a set that contains more than one value. */
   private static FiniteSet S12 = FiniteSet.of(new float[] {1, 2});
 
-  // TODO: Feel free to initialize additional (private static) FiniteSet
+  private static FiniteSet S34 = FiniteSet.of(new float[] {3, 4});
+
+  private static FiniteSet S1234 = FiniteSet.of(new float[] {1, 2, 3, 4});
+
+  // DONE: Feel free to initialize additional (private static) FiniteSet
   //       objects here if you plan to use more of them for the tests you
   //       need to implement below.
 
@@ -128,8 +134,15 @@ public class FiniteSetTest {
    */
   @Test
   public void testUnion() {
-    // TODO: implement tests for FiniteSet.union()
-
+    // DONE: implement tests for FiniteSet.union()
+    assertEquals(S0.union(S0), S0);
+    assertEquals(S0.union(S1), S1);
+    assertEquals(S1.union(S1), S1);
+    assertEquals(S0.union(S12), S12);
+    assertEquals(S1.union(S12), S12);
+    assertEquals(S2.union(S12), S12);
+    assertEquals(S12.union(S12), S12);
+    assertEquals(S12.union(S34), S1234);
   }
 
   ///////////////////////////////////////////////////////////////////////////
@@ -141,8 +154,15 @@ public class FiniteSetTest {
    */
   @Test
   public void testIntersection() {
-    // TODO: implement tests for FiniteSet.intersection()
-
+    // DONE: implement tests for FiniteSet.intersection()
+    assertEquals(S0.intersection(S0), S0);
+    assertEquals(S0.intersection(S1), S0);
+    assertEquals(S1.intersection(S1), S1);
+    assertEquals(S0.intersection(S12), S0);
+    assertEquals(S1.intersection(S12), S1);
+    assertEquals(S2.intersection(S12), S2);
+    assertEquals(S12.intersection(S12), S12);
+    assertEquals(S12.intersection(S34), S0);
   }
 
   ///////////////////////////////////////////////////////////////////////////
@@ -154,8 +174,15 @@ public class FiniteSetTest {
    */
   @Test
   public void testDifference() {
-    // TODO: implement tests for FiniteSet.difference()
-
+    // DONE: implement tests for FiniteSet.difference()
+    assertEquals(S0.difference(S0), S0);
+    assertEquals(S0.difference(S1), S0);
+    assertEquals(S1.difference(S0), S1);
+    assertEquals(S1.difference(S1), S0);
+    assertEquals(S12.difference(S0), S12);
+    assertEquals(S12.difference(S1), S2);
+    assertEquals(S12.difference(S2), S1);
+    assertEquals(S1234.difference(S12), S34);
+    assertEquals(S1234.difference(S34), S12);
   }
-
 }

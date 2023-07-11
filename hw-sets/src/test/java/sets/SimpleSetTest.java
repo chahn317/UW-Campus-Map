@@ -120,9 +120,23 @@ public class SimpleSetTest {
    * Tests calculating the size of a set.
    */
   @Test
-  public void testSize() {
-    // TODO: implement tests for SimpleSet.size()
+  public void testSizeEmptySet() {
+    // DONE: implement tests for SimpleSet.size();
+    assertTrue(S.size() == 0);
+  }
 
+  @Test
+  public void testSizeFiniteSet() {
+    assertTrue(S1.size() == 1);
+    assertTrue(S12.size() == 2);
+    assertTrue(S123.size() == 3);
+  }
+
+  @Test
+  public void testSizeInfiniteSet() {
+    assertTrue(R.size() == Float.POSITIVE_INFINITY);
+    assertTrue(R2.size() == Float.POSITIVE_INFINITY);
+    assertTrue(R12.size() == Float.POSITIVE_INFINITY);
   }
 
   ///////////////////////////////////////////////////////////////////////////
@@ -133,9 +147,52 @@ public class SimpleSetTest {
    * Tests converting a set to a string.
    */
   @Test
-  public void testToString() {
-    // TODO: implement tests for SimpleSet.toString()
+  public void testToStringEmptySet() {
+    // DONE: implement tests for SimpleSet.toString()
+    assertTrue(S.toString().equals("{}"));
+  }
 
+  @Test
+  public void testToStringAllPoints() {
+    assertTrue(R.toString().equals("R"));
+  }
+
+  @Test
+  public void testToStringFiniteSetSingleton() {
+    assertTrue(S1.toString().equals("{" + String.valueOf((float) 1) + "}"));
+    assertTrue(S2.toString().equals("{" + String.valueOf((float) 2) + "}"));
+    assertTrue(S3.toString().equals("{" + String.valueOf((float) 3) + "}"));
+  }
+
+  @Test
+  public void testToStringInfiniteSetSingleton() {
+    assertTrue(R1.toString().equals("R \\ " + "{" + String.valueOf((float) 1) + "}"));
+    assertTrue(R2.toString().equals("R \\ " + "{" + String.valueOf((float) 2) + "}"));
+    assertTrue(R3.toString().equals("R \\ " + "{" + String.valueOf((float) 3) + "}"));
+  }
+
+  @Test
+  public void testToStringFiniteSetComplex() {
+    assertTrue(S12.toString().equals("{" + String.valueOf((float) 1) + ", " +
+            String.valueOf((float) 2)+ "}"));
+    assertTrue(S23.toString().equals("{" + String.valueOf((float) 2) + ", " +
+            String.valueOf((float) 3)+ "}"));
+    assertTrue(S13.toString().equals("{" + String.valueOf((float) 1) + ", " +
+            String.valueOf((float) 3)+ "}"));
+    assertTrue(S123.toString().equals("{" + String.valueOf((float) 1) + ", " +
+            String.valueOf((float) 2) + ", " + String.valueOf((float) 3)+ "}"));
+  }
+
+  @Test
+  public void testToStringInfiniteSetComplex() {
+    assertTrue(R12.toString().equals("R \\ " + "{" + String.valueOf((float) 1) + ", " +
+            String.valueOf((float) 2)+ "}"));
+    assertTrue(R23.toString().equals("R \\ " + "{" + String.valueOf((float) 2) + ", " +
+            String.valueOf((float) 3)+ "}"));
+    assertTrue(R13.toString().equals("R \\ " + "{" + String.valueOf((float) 1) + ", " +
+            String.valueOf((float) 3)+ "}"));
+    assertTrue(R123.toString().equals("R \\ " + "{" + String.valueOf((float) 1) + ", " +
+            String.valueOf((float) 2) + ", " + String.valueOf((float) 3)+ "}"));
   }
 
   ///////////////////////////////////////////////////////////////////////////
