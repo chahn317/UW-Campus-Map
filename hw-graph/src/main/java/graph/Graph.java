@@ -2,6 +2,11 @@ package graph;
 
 import java.util.List;
 
+/**
+ * This object represents a directed labeled graph. In this representation,
+ * each node contains unique data, and each edge that connects the same nodes
+ * in the same direction has unique labels.
+ */
 public class Graph {
 
     /**
@@ -25,7 +30,6 @@ public class Graph {
     public void addNode(String data) {
         throw new RuntimeException();
     }
-
 
     /**
      * Adds a new labeled edge that points from the parent node to the child node
