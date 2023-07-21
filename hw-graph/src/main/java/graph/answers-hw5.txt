@@ -9,7 +9,18 @@ included each one; if not, explain whether you considered additional classes and
 not to include them.
 
 
-TODO: Your answer here!
+Initially, I looked at the example tests to get an idea of what methods to include. This is why
+I included methods that add nodes and edges, as well as methods that list all the nodes in a graph
+or all the children of a particular node. After that, I added more methods that I thought would be
+useful, such as size() and isEmpty(), which are common operations. I also added methods to change
+node and edge values. All in all, these methods should be a sufficient interface to a graph because
+they cover construction, basic statistics, and manipulation, which should be enough for most
+simple operations.
+
+My design only includes one class, the top-level Graph class. I considered adding more for Nodes
+and Edges, but I ultimately decided against it since clients are mostly going to be working with
+the string representations. This makes extra classes such as Nodes and Edges implementation
+details, which aren't necessary for a specification.
 
 
 ## Part 3
@@ -19,4 +30,10 @@ What was your testing strategy for this assignment? How do your script tests and
 differ from each other (if they do), and why?
 
 
-TODO: Your answer here!
+My testing strategy for this assignment was to split up the tests so that the script tests and
+JUnit tests combined would fully test my graph implementation. I wrote the specification for a
+variety of different methods, but the script tests can only test a few of them, namely addNode(),
+addEdge(), getNodes(), and getChildren(). To test the rest of my methods, such as getEdges(),
+changeNode(), changeEdge(), size(), and isEmpty(), as well as if my exceptions worked correctly
+or not, I had to use JUnit tests. Essentially, my script tests and JUnit tests differ from each
+other because they test completely different parts of my implementation.

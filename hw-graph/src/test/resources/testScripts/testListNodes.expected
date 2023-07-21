@@ -1,0 +1,21 @@
+# Tests getNodes()
+
+# Create a graph
+created graph graph1
+
+# List nodes in graph1 when empty
+graph1 contains:
+
+# List nodes in graph1 when not empty
+added node n1 to graph1
+graph1 contains: n1
+added node n2 to graph1
+graph1 contains: n1 n2
+added node n3 to graph1
+graph1 contains: n1 n2 n3
+
+# List nodes in graph1 when there are edges
+added edge e11 from n1 to n1 in graph1
+added edge e12 from n1 to n2 in graph1
+added edge e13 from n1 to n3 in graph1
+graph1 contains: n1 n2 n3

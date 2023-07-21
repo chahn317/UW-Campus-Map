@@ -1,0 +1,27 @@
+# Tests getChildren()
+
+# Create a graph
+created graph graph1
+
+# Add three nodes
+added node n1 to graph1
+added node n2 to graph1
+added node n3 to graph1
+
+# List children when there are none
+the children of n1 in graph1 are:
+
+# List children when there is a self-edge
+added edge e11 from n1 to n1 in graph1
+the children of n1 in graph1 are: n1(e11)
+
+# List children when there are more edges
+added edge e12 from n1 to n2 in graph1
+added edge e13 from n1 to n3 in graph1
+the children of n1 in graph1 are: n1(e11) n2(e12) n3(e13)
+
+# List children when there is a cycle
+added edge e23 from n2 to n3 in graph1
+added edge e31 from n3 to n1 in graph1
+the children of n2 in graph1 are: n3(e23)
+the children of n3 in graph1 are: n1(e31)

@@ -1,0 +1,27 @@
+# Tests getChildren()
+
+# Create a graph
+CreateGraph graph1
+
+# Add three nodes
+AddNode graph1 n1
+AddNode graph1 n2
+AddNode graph1 n3
+
+# List children when there are none
+ListChildren graph1 n1
+
+# List children when there is a self-edge
+AddEdge graph1 n1 n1 e11
+ListChildren graph1 n1
+
+# List children when there are more edges
+AddEdge graph1 n1 n2 e12
+AddEdge graph1 n1 n3 e13
+ListChildren graph1 n1
+
+# List children when there is a cycle
+AddEdge graph1 n2 n3 e23
+AddEdge graph1 n3 n1 e31
+ListChildren graph1 n2
+ListChildren graph1 n3

@@ -1,0 +1,20 @@
+# Tests addNode() and addEdge()
+
+# Create a graph
+CreateGraph graph1
+
+# Add three nodes
+AddNode graph1 n1
+AddNode graph1 n2
+AddNode graph1 n3
+
+# Add self-edge
+AddEdge graph1 n1 n1 e11
+
+# Add more edges
+AddEdge graph1 n1 n2 e12
+AddEdge graph1 n1 n3 e13
+
+# Add edge cycle
+AddEdge graph1 n2 n3 e23
+AddEdge graph1 n3 n1 e31

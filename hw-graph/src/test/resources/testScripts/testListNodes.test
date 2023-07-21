@@ -1,0 +1,21 @@
+# Tests getNodes()
+
+# Create a graph
+CreateGraph graph1
+
+# List nodes in graph1 when empty
+ListNodes graph1
+
+# List nodes in graph1 when not empty
+AddNode graph1 n1
+ListNodes graph1
+AddNode graph1 n2
+ListNodes graph1
+AddNode graph1 n3
+ListNodes graph1
+
+# List nodes in graph1 when there are edges
+AddEdge graph1 n1 n1 e11
+AddEdge graph1 n1 n2 e12
+AddEdge graph1 n1 n3 e13
+ListNodes graph1
