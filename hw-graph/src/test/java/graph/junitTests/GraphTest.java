@@ -105,35 +105,74 @@ public class GraphTest {
     }
 
     @Test
-    public void testExceptions() {
+    public void testAddNodeExceptions() {
+        Graph G = new Graph();
+        G.addNode("n1");
+
+        // Should throw exception if node value already exists in the graph
+        assertThrows(IllegalArgumentException.class, () -> {G.addNode("n1");});
+    }
+
+    @Test
+    public void testAddEdgeExceptions() {
+        Graph G = new Graph();
+        G.addNode("n1");
+        G.addNode("n2");
+        G.addEdge("n1", "n2", "e12");
+
+        // Should throw exception if edge label already exists between parent/child
+        assertThrows(IllegalArgumentException.class, () -> {G.addEdge("n1", "n2", "e12");});
+
+        // Should throw exception if parent/child doesn't exist
+        assertThrows(IllegalArgumentException.class, () -> {G.addEdge("n3", "n2", "e12");});
+        assertThrows(IllegalArgumentException.class, () -> {G.addEdge("n1", "n3", "e12");});
+    }
+
+    @Test
+    public void testChangeNodeExceptions() {
+        Graph G = new Graph();
+        G.addNode("n1");
+        G.addNode("n2");
+
+        // Should throw exception if new node value already exists in the graph
+        assertThrows(IllegalArgumentException.class, () -> {G.changeNode("n1", "n2");});
+
+        // Should throw exception if old node value doesn't exist in the graph
+        assertThrows(IllegalArgumentException.class, () -> {G.changeNode("n4", "n-new");});
+    }
+
+    @Test
+    public void testChangeEdgeExceptions() {
         Graph G = new Graph();
         G.addNode("n1");
         G.addNode("n2");
         G.addEdge("n1", "n2", "e12");
         G.addEdge("n1", "n2", "e122");
 
-        // addNode()
-        assertThrows(IllegalArgumentException.class, () -> {G.addNode("n1");});
-
-        // addEdge()
-        assertThrows(IllegalArgumentException.class, () -> {G.addEdge("n1", "n2", "e12");});
-        assertThrows(IllegalArgumentException.class, () -> {G.addEdge("n3", "n2", "e12");});
-        assertThrows(IllegalArgumentException.class, () -> {G.addEdge("n1", "n3", "e12");});
-
-        // changeNode()
-        assertThrows(IllegalArgumentException.class, () -> {G.changeNode("n1", "n2");});
-        assertThrows(IllegalArgumentException.class, () -> {G.changeNode("n4", "n-new");});
-
-        // changeEdge()
+        // Should throw exception if edge label already exists between parent and child
         assertThrows(IllegalArgumentException.class, () -> {G.changeEdge("n1", "n2", "e12", "e122");});
+
+        // Should throw exception if old value doesn't exist
         assertThrows(IllegalArgumentException.class, () -> {G.changeEdge("n1", "n2", "e13", "e14");});
+
+        // Should throw exception if parent or child doesn't exist
         assertThrows(IllegalArgumentException.class, () -> {G.changeEdge("n3", "n2", "e12", "e13");});
         assertThrows(IllegalArgumentException.class, () -> {G.changeEdge("n1", "n3", "e12", "e13");});
+    }
 
-        // getChildren()
-        assertThrows(IllegalArgumentException.class, () -> {G.getChildren("n3");});
+    @Test
+    public void testGetChildrenExceptions() {
+        Graph G = new Graph();
 
-        // getEdges()
-        assertThrows(IllegalArgumentException.class, () -> {G.getEdges("n3");});
+        // Should throw exception if given node doesn't exist
+        assertThrows(IllegalArgumentException.class, () -> {G.getChildren("n1");});
+    }
+
+    @Test
+    public void testGetEdgesExceptions() {
+        Graph G = new Graph();
+
+        // Should throw exception if given node doesn't exist
+        assertThrows(IllegalArgumentException.class, () -> {G.getEdges("n1");});
     }
 }

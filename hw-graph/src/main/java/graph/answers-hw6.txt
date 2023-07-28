@@ -58,7 +58,8 @@ tests alone are sufficient.
 Although I made some changes to my tests due to my changes in the spec, I kept their logic the same
 otherwise. I believe these alone are sufficient, since I test every method in my implementation
 with edge cases such as self-edges and cycles, and I also make sure my exceptions throw in all
-situations where they are supposed to.
+situations where they are supposed to. The only thing I really did was break up the testExceptions()
+method into different cases, as suggested from my feedback.
 
 
 2. Did you make any changes to your specifications as you were implementing your Graph? (yes/no)
