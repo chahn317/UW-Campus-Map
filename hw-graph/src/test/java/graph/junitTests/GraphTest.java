@@ -3,15 +3,18 @@ package graph.junitTests;
 import graph.*;
 import org.junit.Test;
 import static org.junit.Assert.*;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
+import java.util.AbstractMap.SimpleEntry;
+import org.junit.Rule;
+import org.junit.rules.Timeout;
 
 public class GraphTest {
+    @Rule public Timeout globalTimeout = Timeout.seconds(10); // 10 seconds max per method tested
 
     @Test
     public void testChangeNode() {
         Graph G = new Graph();
-        List<String> expected = new ArrayList<>();
+        Set<String> expected = new HashSet<>();
 
         // Add 100 nodes
         for (int i = 1; i < 100; i++) {
@@ -23,7 +26,8 @@ public class GraphTest {
         // Change each node one by one and test
         for (int i = 1; i < 100; i++) {
             String old = String.valueOf(i);
-            expected.set(i - 1, expected.get(i - 1) + "-new");
+            expected.remove(old);
+            expected.add(old + "-new");
             G.changeNode(old, old + "-new");
             assertEquals(G.getNodes(), expected);
         }
@@ -32,7 +36,7 @@ public class GraphTest {
     @Test
     public void testGetEdges() {
         Graph G = new Graph();
-        List<String> expected = new ArrayList<>();
+        Set<SimpleEntry<String, String>> expected = new HashSet<>();
 
         // Add 100 nodes
         for (int i = 1; i < 100; i++) {
@@ -43,16 +47,16 @@ public class GraphTest {
         String parent = String.valueOf(1);
         for (int i = 1; i < 100; i++) {
             String edge = String.valueOf(i);
-            expected.add(edge);
+            expected.add(new SimpleEntry<>(edge, edge));
             G.addEdge(parent, edge, edge);
-            assertEquals(G.getEdges(parent), expected);
+            assertEquals(expected, G.getEdges(parent));
         }
     }
 
     @Test
     public void testChangeEdge() {
         Graph G = new Graph();
-        List<String> expected = new ArrayList<>();
+        Set<SimpleEntry<String, String>> expected = new HashSet<>();
 
         // Add 100 nodes
         for (int i = 1; i < 100; i++) {
@@ -63,16 +67,17 @@ public class GraphTest {
         String parent = String.valueOf(1);
         for (int i = 1; i < 100; i++) {
             String edge = String.valueOf(i);
-            expected.add(edge);
+            expected.add(new SimpleEntry<>(edge, edge));
             G.addEdge(parent, edge, edge);
         }
 
         // Change each edge one by one and test
         for (int i = 1; i < 100; i++) {
             String old = String.valueOf(i);
-            expected.set(i - 1, expected.get(i - 1) + "-new");
+            expected.remove(new SimpleEntry<>(old, old));
+            expected.add(new SimpleEntry<>(old + "-new", old));
             G.changeEdge(parent, old, old, old + "-new");
-            assertEquals(G.getEdges(parent), expected);
+            assertEquals(expected, G.getEdges(parent));
         }
     }
 

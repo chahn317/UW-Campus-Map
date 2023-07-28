@@ -17,6 +17,23 @@ A few examples of possible Graph representations:
 representations listed above (for example, in terms of runtime complexity, space
 complexity, or ease of implementation).
 
+A:
+Advantage: Low space complexity since it only stores bare minimum information.
+Disadvantage: Looking up edges/nodes may require going through the entire collection,
+which can be inefficient when there are lots of elements.
+
+B:
+Advantage: When there are only a few edges, this implementation is space-efficient
+since it only stores outgoing edges for each node.
+Disadvantage: When there are many edges, we need to spend more time traversing
+through the parent node's list of outgoing edges.
+
+C:
+Advantage: Implementing methods involving edges/children is easy since you can just
+look up the nodes associated with them.
+Disadvantage: High space complexity, since it makes space for pairs of nodes even if
+there are no nodes between them. This makes it inefficient for graphs with many nodes
+or few edges.
 
 
 
@@ -24,7 +41,10 @@ complexity, or ease of implementation).
 chose it. If you chose to use a different representation than one of the three we described
 above, be sure to list its advantages and disadvantages, too.
 
-
+I decided to use the B (the adjacency list) because it seems like a good compromise between
+A and C. A generally has better space complexity since it's just a collection, but C has
+better runtime because the elements are somewhat organized. B does not take up as much space
+as C, but keeps the aspect of pairing edges with nodes so that they're easier to look up.
 
 
 ## Part 4
@@ -35,11 +55,22 @@ above, be sure to list its advantages and disadvantages, too.
 1. Describe any new tests you added and why you added them, or why you feel that your original
 tests alone are sufficient.
 
-
+Although I made some changes to my tests due to my changes in the spec, I kept their logic the same
+otherwise. I believe these alone are sufficient, since I test every method in my implementation
+with edge cases such as self-edges and cycles, and I also make sure my exceptions throw in all
+situations where they are supposed to.
 
 
 2. Did you make any changes to your specifications as you were implementing your Graph? (yes/no)
 If yes, describe your changes and why you made them.
 
+I made two changes to my specification while I was implementing my Graph. The getNodes(), getChildren(),
+and getEdges() methods were originally going to return lists, but I changed it so that they return sets
+instead. This is because sets are unordered while lists are ordered, and I decided that sets were a more
+appropriate data structure for my rep invariant since I don't make any promises about the ordering of
+anything.
 
+I also changed getEdges() to return a set of SimpleEntries where the key is the edge label and the value
+is the child node since I otherwise didn't have a method that mapped the relationship between edges and
+child nodes, which was necessary for the listChildren() test.
 

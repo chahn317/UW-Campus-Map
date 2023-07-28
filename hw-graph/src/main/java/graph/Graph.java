@@ -1,6 +1,7 @@
 package graph;
 
-import java.util.List;
+import java.util.*;
+import java.util.AbstractMap.SimpleEntry;
 
 /**
  * This object represents a directed labeled graph. In this representation,
@@ -8,13 +9,25 @@ import java.util.List;
  * in the same direction has unique labels.
  */
 public class Graph {
+    // Rep invariant:
+    // this != null, all nodes != null, all edges != null
+
+    // Abstract function:
+    // AF(this) = a labeled directed graph g such that
+    // all nodes = g.keySet()
+    // list of all edges with parent node n = g.get(n)
+    // label of edge e = e.getKey()
+    // child node of edge e = e.getValue()
+
+    private final HashMap<String, Set<SimpleEntry<String, String>>> graph;
+    private final boolean DEBUG = false;
 
     /**
      * Constructs a new graph
      * @spec.effects creates an empty graph
      */
     public Graph() {
-        throw new RuntimeException();
+        graph = new HashMap<>();
     }
 
     /**
@@ -28,7 +41,12 @@ public class Graph {
      *      node's data
      */
     public void addNode(String data) {
-        throw new RuntimeException();
+        checkRep();
+        if (graph.containsKey(data)) {
+            throw new IllegalArgumentException();
+        }
+        graph.put(data, new HashSet<>());
+        checkRep();
     }
 
     /**
@@ -46,7 +64,13 @@ public class Graph {
      *      does not exist in the graph
      */
     public void addEdge(String parent, String child, String label) {
-        throw new RuntimeException();
+        checkRep();
+        if (!graph.containsKey(parent) || !graph.containsKey(child) ||
+            graph.get(parent).contains(new SimpleEntry<>(label, child))) {
+            throw new IllegalArgumentException();
+        }
+        graph.get(parent).add(new SimpleEntry<>(label, child));
+        checkRep();
     }
 
     /**
@@ -62,7 +86,13 @@ public class Graph {
      *      node's data, or if oldVal does not exist in the graph
      */
     public void changeNode(String oldVal, String newVal) {
-        throw new RuntimeException();
+        checkRep();
+        if (!graph.containsKey(oldVal) || graph.containsKey(newVal)) {
+            throw new IllegalArgumentException();
+        }
+        Set<SimpleEntry<String, String>> edges = graph.remove(oldVal);
+        graph.put(newVal, edges);
+        checkRep();
     }
 
     /**
@@ -83,41 +113,71 @@ public class Graph {
      *      the graph
      */
     public void changeEdge(String parent, String child, String oldVal, String newVal) {
-        throw new RuntimeException();
+        checkRep();
+        Set<SimpleEntry<String, String>> edges = graph.get(parent);
+        if (!graph.containsKey(parent) || !graph.containsKey(child) ||
+            !edges.contains(new SimpleEntry<>(oldVal, child)) ||
+            edges.contains(new SimpleEntry<>(newVal, child))) {
+            throw new IllegalArgumentException();
+        }
+        for (SimpleEntry<String, String> edge : edges) {
+            if (edge.getKey().equals(oldVal) && edge.getValue().equals(child)) {
+                edges.remove(edge);
+                edges.add(new SimpleEntry<>(newVal, child));
+                break;
+            }
+        }
+        checkRep();
     }
 
     /**
-     * Returns a list containing all nodes in this
-     * @return a list of nodes in this
+     * Returns a set containing all nodes in this
+     * @return a set of nodes in this
      */
-    public List<String> getNodes() {
-        throw new RuntimeException();
+    public Set<String> getNodes() {
+        checkRep();
+        return graph.keySet();
     }
 
     /**
-     * Returns a list containing all child nodes of the given node
+     * Returns a set containing all child nodes of the given node
      * @spec.requires data must be the string representation of a node that
      *      exists in the graph
      * @param data - the data of the node whose children will be returned
-     * @return a list containing all the child nodes of data
+     * @return a set containing all the child nodes of data
      * @throws IllegalArgumentException if data is not the string representation
      *      of a node that exists in the graph
      */
-    public List<String> getChildren(String data) {
-        throw new RuntimeException();
+    public Set<String> getChildren(String data) {
+        checkRep();
+        if (!graph.keySet().contains(data)) {
+            throw new IllegalArgumentException();
+        }
+        HashSet<String> children = new HashSet<>();
+        for (SimpleEntry<String, String> edge : graph.get(data)) {
+            children.add(edge.getValue());
+        }
+        checkRep();
+        return children;
     }
 
     /**
-     * Returns a list containing all outgoing edges of the given node
+     * Returns a set containing all outgoing edges of the given node
      * @spec.requires data must be the string representation of a node that
      *      exists in the graph
      * @param data - the data of the node whose outgoing edges will be returned
-     * @return a list containing all the outgoing edges of data
+     * @return a set of containing all the outgoing edges of data such that each
+     *      element is a SimpleEntry where the key is the edge's label and the
+     *      value is the corresponding child node
      * @throws IllegalArgumentException if data is not the string representation
      *      of a node that exists in the graph
      */
-    public List<String> getEdges(String data) {
-        throw new RuntimeException();
+    public Set<SimpleEntry<String, String>> getEdges(String data) {
+        checkRep();
+        if (!graph.keySet().contains(data)) {
+            throw new IllegalArgumentException();
+        }
+        return graph.get(data);
     }
 
     /**
@@ -125,7 +185,8 @@ public class Graph {
      * @return the number of nodes in this
      */
     public int size() {
-        throw new RuntimeException();
+        checkRep();
+        return graph.keySet().size();
     }
 
     /**
@@ -134,7 +195,20 @@ public class Graph {
      * @return true if the graph is empty, false if not
      */
     public boolean isEmpty() {
-        throw new RuntimeException();
+        checkRep();
+        return graph.isEmpty();
     }
 
+    // Checks the representation invariant
+    private void checkRep() {
+        if (DEBUG) {
+            assert graph != null;
+            for (String node : graph.keySet()) {
+                assert node != null;
+            }
+            for (Set<SimpleEntry<String, String>> edge : graph.values()) {
+                assert edge != null;
+            }
+        }
+    }
 }
