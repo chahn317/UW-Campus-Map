@@ -7,8 +7,11 @@ import java.util.AbstractMap.SimpleEntry;
  * This object represents a directed labeled graph. In this representation,
  * each node contains unique data, and each edge that connects the same nodes
  * in the same direction has unique labels.
+ *
+ * @param <N> Data type of the nodes
+ * @param <E> Data type of the edges
  */
-public class Graph {
+public class Graph<N, E> {
     // Rep invariant:
     // this != null, all nodes != null, all edges != null
 
@@ -19,7 +22,7 @@ public class Graph {
     // label of edge e = e.getKey()
     // child node of edge e = e.getValue()
 
-    private final HashMap<String, Set<SimpleEntry<String, String>>> graph;
+    private final HashMap<N, Set<SimpleEntry<E, N>>> graph;
     private final boolean DEBUG = false;
 
     /**
@@ -32,15 +35,15 @@ public class Graph {
 
     /**
      * Adds a new node containing the given data to the graph
-     * @spec.requires data must be a string that is different from the data of
-     *      every other node in the graph
+     * @spec.requires data must be different from the data of every other node
+     *      in the graph
      * @spec.modifies this
      * @spec.effects adds a node to this graph
      * @param data - the node's data
      * @throws IllegalArgumentException if data is the same as another existing
      *      node's data
      */
-    public void addNode(String data) {
+    public void addNode(N data) {
         checkRep();
         if (graph.containsKey(data)) {
             throw new IllegalArgumentException();
@@ -63,7 +66,7 @@ public class Graph {
      *      another edge with the same parent and child, or if the parent or child
      *      does not exist in the graph
      */
-    public void addEdge(String parent, String child, String label) {
+    public void addEdge(N parent, N child, E label) {
         checkRep();
         if (!graph.containsKey(parent) || !graph.containsKey(child) ||
             graph.get(parent).contains(new SimpleEntry<>(label, child))) {
@@ -75,9 +78,8 @@ public class Graph {
 
     /**
      * Changes the data contained in a node to a new value
-     * @spec.requires oldVal must be the string representation of a node that
-     *      exists in the graph, and newVal must be different from the data of
-     *      every other node
+     * @spec.requires oldVal must be a node that exists in the graph, and
+     *      newVal must be different from the data of every other node
      * @spec.modifies this
      * @spec.effects changes the value of the node with data oldVal
      * @param oldVal - the old data that will be replaced
@@ -85,22 +87,22 @@ public class Graph {
      * @throws IllegalArgumentException if newVal is the same as another existing
      *      node's data, or if oldVal does not exist in the graph
      */
-    public void changeNode(String oldVal, String newVal) {
+    public void changeNode(N oldVal, N newVal) {
         checkRep();
         if (!graph.containsKey(oldVal) || graph.containsKey(newVal)) {
             throw new IllegalArgumentException();
         }
-        Set<SimpleEntry<String, String>> edges = graph.remove(oldVal);
+        Set<SimpleEntry<E, N>> edges = graph.remove(oldVal);
         graph.put(newVal, edges);
         checkRep();
     }
 
     /**
      * Changes the label contained in an edge to a new value
-     * @spec.requires oldVal must be the string representation of an edge that
-     *      goes from parent to child, newVal must be different from the data of
-     *      every other edge that goes from parent to child, and parent and child
-     *      must both be string representations of nodes that exist
+     * @spec.requires oldVal must be an edge that goes from parent to child,
+     *      newVal must be different from the data of every other edge that
+     *      goes from parent to child, and parent and child
+     *      must both be nodes that exist
      * @spec.modifies this
      * @spec.effects changes the value of the edge with label oldVal
      * @param parent - the parent node's data
@@ -112,15 +114,15 @@ public class Graph {
      *      between the parent and child, or if the parent or child are not in
      *      the graph
      */
-    public void changeEdge(String parent, String child, String oldVal, String newVal) {
+    public void changeEdge(N parent, N child, E oldVal, E newVal) {
         checkRep();
-        Set<SimpleEntry<String, String>> edges = graph.get(parent);
+        Set<SimpleEntry<E, N>> edges = graph.get(parent);
         if (!graph.containsKey(parent) || !graph.containsKey(child) ||
             !edges.contains(new SimpleEntry<>(oldVal, child)) ||
             edges.contains(new SimpleEntry<>(newVal, child))) {
             throw new IllegalArgumentException();
         }
-        for (SimpleEntry<String, String> edge : edges) {
+        for (SimpleEntry<E, N> edge : edges) {
             if (edge.getKey().equals(oldVal) && edge.getValue().equals(child)) {
                 edges.remove(edge);
                 edges.add(new SimpleEntry<>(newVal, child));
@@ -134,27 +136,26 @@ public class Graph {
      * Returns a set containing all nodes in this
      * @return a set of nodes in this
      */
-    public Set<String> getNodes() {
+    public Set<N> getNodes() {
         checkRep();
         return graph.keySet();
     }
 
     /**
      * Returns a set containing all child nodes of the given node
-     * @spec.requires data must be the string representation of a node that
-     *      exists in the graph
+     * @spec.requires data must be a node that exists in the graph
      * @param data - the data of the node whose children will be returned
      * @return a set containing all the child nodes of data
-     * @throws IllegalArgumentException if data is not the string representation
-     *      of a node that exists in the graph
+     * @throws IllegalArgumentException if data is not a node that exists in
+     *      the graph
      */
-    public Set<String> getChildren(String data) {
+    public Set<N> getChildren(N data) {
         checkRep();
         if (!graph.keySet().contains(data)) {
             throw new IllegalArgumentException();
         }
-        HashSet<String> children = new HashSet<>();
-        for (SimpleEntry<String, String> edge : graph.get(data)) {
+        HashSet<N> children = new HashSet<>();
+        for (SimpleEntry<E, N> edge : graph.get(data)) {
             children.add(edge.getValue());
         }
         checkRep();
@@ -163,16 +164,14 @@ public class Graph {
 
     /**
      * Returns a set containing all outgoing edges of the given node
-     * @spec.requires data must be the string representation of a node that
-     *      exists in the graph
+     * @spec.requires data must be a node that exists in the graph
      * @param data - the data of the node whose outgoing edges will be returned
      * @return a set of containing all the outgoing edges of data such that each
      *      element is a SimpleEntry where the key is the edge's label and the
      *      value is the corresponding child node
-     * @throws IllegalArgumentException if data is not the string representation
-     *      of a node that exists in the graph
+     * @throws IllegalArgumentException if data is not a node that exists in the graph
      */
-    public Set<SimpleEntry<String, String>> getEdges(String data) {
+    public Set<SimpleEntry<E, N>> getEdges(N data) {
         checkRep();
         if (!graph.keySet().contains(data)) {
             throw new IllegalArgumentException();
@@ -203,10 +202,10 @@ public class Graph {
     private void checkRep() {
         if (DEBUG) {
             assert graph != null;
-            for (String node : graph.keySet()) {
+            for (N node : graph.keySet()) {
                 assert node != null;
             }
-            for (Set<SimpleEntry<String, String>> edge : graph.values()) {
+            for (Set<SimpleEntry<E, N>> edge : graph.values()) {
                 assert edge != null;
             }
         }

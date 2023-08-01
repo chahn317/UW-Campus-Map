@@ -13,7 +13,7 @@ public class GraphTest {
 
     @Test
     public void testChangeNode() {
-        Graph G = new Graph();
+        Graph<String, String> G = new Graph<>();
         Set<String> expected = new HashSet<>();
 
         // Add 100 nodes
@@ -35,7 +35,7 @@ public class GraphTest {
 
     @Test
     public void testGetEdges() {
-        Graph G = new Graph();
+        Graph<String, String> G = new Graph<>();
         Set<SimpleEntry<String, String>> expected = new HashSet<>();
 
         // Add 100 nodes
@@ -55,7 +55,7 @@ public class GraphTest {
 
     @Test
     public void testChangeEdge() {
-        Graph G = new Graph();
+        Graph<String, String> G = new Graph<>();
         Set<SimpleEntry<String, String>> expected = new HashSet<>();
 
         // Add 100 nodes
@@ -84,17 +84,17 @@ public class GraphTest {
     @Test
     public void testIsEmpty() {
         // Should be true if empty
-        Graph G = new Graph();
+        Graph<String, String> G = new Graph<>();
         assertTrue(G.isEmpty());
 
         // Should be false if not empty
-        G.addNode("n1");
+        G.addNode("new");
         assertFalse(G.isEmpty());
     }
 
     @Test
     public void testSize() {
-        Graph G = new Graph();
+        Graph<String, String> G = new Graph<>();
         assertEquals(G.size(), 0);
 
         // Add 100 nodes one by one and test size
@@ -106,7 +106,7 @@ public class GraphTest {
 
     @Test
     public void testAddNodeExceptions() {
-        Graph G = new Graph();
+        Graph<String, String> G = new Graph<>();
         G.addNode("n1");
 
         // Should throw exception if node value already exists in the graph
@@ -115,7 +115,7 @@ public class GraphTest {
 
     @Test
     public void testAddEdgeExceptions() {
-        Graph G = new Graph();
+        Graph<String, String> G = new Graph<>();
         G.addNode("n1");
         G.addNode("n2");
         G.addEdge("n1", "n2", "e12");
@@ -130,7 +130,7 @@ public class GraphTest {
 
     @Test
     public void testChangeNodeExceptions() {
-        Graph G = new Graph();
+        Graph<String, String> G = new Graph<>();
         G.addNode("n1");
         G.addNode("n2");
 
@@ -143,7 +143,7 @@ public class GraphTest {
 
     @Test
     public void testChangeEdgeExceptions() {
-        Graph G = new Graph();
+        Graph<String, String> G = new Graph<>();
         G.addNode("n1");
         G.addNode("n2");
         G.addEdge("n1", "n2", "e12");
@@ -162,7 +162,7 @@ public class GraphTest {
 
     @Test
     public void testGetChildrenExceptions() {
-        Graph G = new Graph();
+        Graph<String, String> G = new Graph<>();
 
         // Should throw exception if given node doesn't exist
         assertThrows(IllegalArgumentException.class, () -> {G.getChildren("n1");});
@@ -170,7 +170,7 @@ public class GraphTest {
 
     @Test
     public void testGetEdgesExceptions() {
-        Graph G = new Graph();
+        Graph<String, String> G = new Graph<>();
 
         // Should throw exception if given node doesn't exist
         assertThrows(IllegalArgumentException.class, () -> {G.getEdges("n1");});

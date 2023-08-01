@@ -31,7 +31,7 @@ public class GraphTestDriver {
      * String -> Graph: maps the names of graphs to the actual graph
      **/
     // DONE for the student: Uncomment and parameterize the next line correctly:
-    private final Map<String, Graph> graphs = new HashMap<String, Graph>();
+    private final Map<String, Graph<String, String>> graphs = new HashMap<String, Graph<String, String>>();
     private final PrintWriter output;
     private final BufferedReader input;
 
@@ -117,7 +117,7 @@ public class GraphTestDriver {
 
     private void createGraph(String graphName) {
         // DONE Insert your code here.
-        graphs.put(graphName, new Graph());
+        graphs.put(graphName, new Graph<String, String>());
         output.println("created graph " + graphName);
     }
 
