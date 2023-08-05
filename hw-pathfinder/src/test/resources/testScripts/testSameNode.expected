@@ -1,0 +1,12 @@
+# Test case where there is a trivial path from a node to itself
+
+created graph graph1
+
+added node A to graph1
+added node B to graph1
+
+path from A to A:
+total cost: 0.000
+
+path from B to B:
+total cost: 0.000

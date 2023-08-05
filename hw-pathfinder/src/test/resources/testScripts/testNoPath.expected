@@ -1,0 +1,24 @@
+# Test case where there is no path between two nodes
+
+created graph graph1
+
+added node A to graph1
+added node B to graph1
+added node C to graph1
+added node D to graph1
+
+# no edges
+
+path from A to B:
+no path found
+
+# add edges
+
+added edge 1.000 from A to B in graph1
+added edge 1.000 from A to C in graph1
+
+path from A to D:
+no path found
+
+path from B to D:
+no path found

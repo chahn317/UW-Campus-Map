@@ -1,0 +1,13 @@
+# Test case where either start or dest doesn't exist in the graph
+
+CreateGraph graph1
+
+AddNode graph1 A
+
+# dest doesn't exist
+
+FindPath graph1 A B
+
+# start doesn't exist
+
+FindPath graph1 C A

@@ -1,0 +1,13 @@
+# Test case where either start or dest doesn't exist in the graph
+
+created graph graph1
+
+added node A to graph1
+
+# dest doesn't exist
+
+unknown: B
+
+# start doesn't exist
+
+unknown: C

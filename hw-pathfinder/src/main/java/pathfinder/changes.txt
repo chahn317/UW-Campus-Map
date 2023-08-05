@@ -1,2 +1,3 @@
 Briefly list any changes you made to your graph class during hw-pathfinder, and why you made those changes.
 
+I didn't make any changes to my Graph class from HW6.

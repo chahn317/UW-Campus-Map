@@ -1,0 +1,10 @@
+# Test case where there is a trivial path from a node to itself
+
+CreateGraph graph1
+
+AddNode graph1 A
+AddNode graph1 B
+
+FindPath graph1 A A
+
+FindPath graph1 B B

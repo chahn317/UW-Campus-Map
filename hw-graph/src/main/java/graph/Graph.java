@@ -68,8 +68,11 @@ public class Graph<N, E> {
      */
     public void addEdge(N parent, N child, E label) {
         checkRep();
-        if (!graph.containsKey(parent) || !graph.containsKey(child) ||
-            graph.get(parent).contains(new SimpleEntry<>(label, child))) {
+        if (!graph.containsKey(parent)) {
+            throw new IllegalArgumentException();
+        } else if (!graph.containsKey(child)) {
+            throw new IllegalArgumentException();
+        } else if (graph.get(parent).contains(new SimpleEntry<>(label, child))) {
             throw new IllegalArgumentException();
         }
         graph.get(parent).add(new SimpleEntry<>(label, child));
@@ -138,7 +141,9 @@ public class Graph<N, E> {
      */
     public Set<N> getNodes() {
         checkRep();
-        return graph.keySet();
+        Set<N> nodes = new HashSet<>();
+        nodes.addAll(graph.keySet());
+        return nodes;
     }
 
     /**
@@ -176,7 +181,9 @@ public class Graph<N, E> {
         if (!graph.keySet().contains(data)) {
             throw new IllegalArgumentException();
         }
-        return graph.get(data);
+        Set<SimpleEntry<E, N>> edges = new HashSet<>();
+        edges.addAll(graph.get(data));
+        return edges;
     }
 
     /**
