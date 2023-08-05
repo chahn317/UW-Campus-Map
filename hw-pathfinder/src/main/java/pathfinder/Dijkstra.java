@@ -26,7 +26,7 @@ public class Dijkstra<N> {
      * @param graph - The graph that is to be traversed
      * @param start - The start node
      * @param dest - The destination node
-     * @throws IllegalArgumentException if an edge < 0.0 is found
+     * @throws IllegalArgumentException if a negative edge cost is found
      * @return Returns the minimum-cost path from the start node to
      *      the end node in the given graph
      */

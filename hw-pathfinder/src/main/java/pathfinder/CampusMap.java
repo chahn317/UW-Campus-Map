@@ -22,6 +22,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+
+/**
+ * CampusMap provides a representation of all the buildings on the UW campus.
+ */
 public class CampusMap implements ModelAPI {
 
     private final Graph<Point, Double> campusMap;
@@ -30,6 +34,11 @@ public class CampusMap implements ModelAPI {
 
     private final Map<String, Point> points;
 
+    /**
+     * Constructs a new CampusMap containing all the buildings and paths between
+     *      buildings on the UW campus
+     * @spec.effects Creates a new CampusMap
+     */
     public CampusMap() {
         campusMap = new Graph<>();
         buildings = new HashMap<>();
