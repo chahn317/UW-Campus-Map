@@ -24,9 +24,29 @@ import java.util.Map;
 
 
 /**
- * CampusMap provides a representation of all the buildings on the UW campus.
+ * CampusMap provides a representation of all the buildings on the UW campus
  */
 public class CampusMap implements ModelAPI {
+
+    // Abstraction Function:
+    //      location of the buildings = campusMap.keySet();
+    //      short names of the buildings = buildings.keySet();
+    //      long name of the building with short name n = buildings.get(n);
+    //      location of the building with short name n = points.get(n);
+
+    // Representation Invariant:
+    //      campusMap != null
+    //      buildings != null
+    //      points != null;
+    //      For every Point p and Double d in campusMap,
+    //          p != null
+    //          d != null
+    //          d >= 0.0
+    //      For every String s in buildings,
+    //          s != null
+    //      For every String s and Point p in points,
+    //          s != null
+    //          p != null
 
     private final Graph<Point, Double> campusMap;
 
@@ -64,11 +84,24 @@ public class CampusMap implements ModelAPI {
         }
     }
 
+    /**
+     * Returns whether the given short name exists in the campus map
+     *
+     * @param shortName The short name of a building to query.
+     * @return {@literal true} iff the short name provided exists in this campus map.
+     */
     @Override
     public boolean shortNameExists(String shortName) {
         return buildings.containsKey(shortName);
     }
 
+    /**
+     * Returns the long name of the building corresponding to the given short name
+     *
+     * @param shortName The short name of a building to look up.
+     * @return The long name of the building corresponding to the provided short name.
+     * @throws IllegalArgumentException if the short name provided does not exist.
+     */
     @Override
     public String longNameForShort(String shortName) {
         if (!shortNameExists(shortName)) {
@@ -77,6 +110,12 @@ public class CampusMap implements ModelAPI {
         return buildings.get(shortName);
     }
 
+    /**
+     * Returns a map of all buildings such that the keySet is the short names of the buildings
+     *      and the long names are the corresponding values
+     *
+     * @return A mapping from all the buildings' short names to their long names in this campus map.
+     */
     @Override
     public Map<String, String> buildingNames() {
         Map<String, String> mapping = new HashMap<>();
@@ -86,6 +125,17 @@ public class CampusMap implements ModelAPI {
         return mapping;
     }
 
+    /**
+     * Finds the shortest path, by distance, between the two provided buildings.
+     *
+     * @param startShortName The short name of the building at the beginning of this path.
+     * @param endShortName   The short name of the building at the end of this path.
+     * @return A path between {@code startBuilding} and {@code endBuilding}, or {@literal null}
+     * if none exists.
+     * @throws IllegalArgumentException if {@code startBuilding} or {@code endBuilding} are
+     *                                  {@literal null}, or not valid short names of buildings in
+     *                                  this campus map.
+     */
     @Override
     public Path<Point> findShortestPath(String startShortName, String endShortName) {
         if (startShortName == null || endShortName == null || !shortNameExists(startShortName)
