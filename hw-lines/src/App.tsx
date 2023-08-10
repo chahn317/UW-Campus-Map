@@ -22,7 +22,6 @@ interface AppState {
 }
 
 class App extends Component<{}, AppState> { // <- {} means no props.
-
     constructor(props: any) {
         super(props);
         this.state = {

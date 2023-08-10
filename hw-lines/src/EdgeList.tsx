@@ -53,6 +53,9 @@ class EdgeList extends Component<EdgeListProps, EdgeListState> {
                     const lines: string[] = this.state.text.trim().split("\n")
                     for (let i = 0; i < lines.length; i++) {
                         const tokens: string[] = lines[i].trim().split(" ")
+
+                        // If there are not exactly 5 tokens per line, the edges are not
+                        // in the correct format, so an alert is shown to the user
                         if (tokens.length != 5) {
                             alert("Edges must be in the format: x1 y1 x2 y2 color")
                             break;
@@ -60,6 +63,9 @@ class EdgeList extends Component<EdgeListProps, EdgeListState> {
                         const coordinates: number[] = []
                         for (let i = 0; i < tokens.length - 1; i++) {
                             const num: number = parseInt(tokens[i])
+
+                            // If any of the coordinates are out of bounds, an alert is
+                            // shown to the user
                             if (num < 0 || num > 4000) {
                                 alert("Coordinates should be between 0 and 4000 inclusive")
                                 break;
