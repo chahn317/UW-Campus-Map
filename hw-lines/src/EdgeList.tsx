@@ -64,6 +64,12 @@ class EdgeList extends Component<EdgeListProps, EdgeListState> {
                         for (let i = 0; i < tokens.length - 1; i++) {
                             const num: number = parseInt(tokens[i])
 
+                            // If the token is not a number, an alert is shown to the
+                            // user
+                            if (isNaN(num)) {
+                                alert("Coordinates must be numbers")
+                            }
+
                             // If any of the coordinates are out of bounds, an alert is
                             // shown to the user
                             if (num < 0 || num > 4000) {
