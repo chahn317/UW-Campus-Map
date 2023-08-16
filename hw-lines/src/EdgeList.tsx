@@ -58,7 +58,7 @@ class EdgeList extends Component<EdgeListProps, EdgeListState> {
                         // in the correct format, so an alert is shown to the user
                         if (tokens.length != 5) {
                             alert("Edges must be in the format: x1 y1 x2 y2 color")
-                            break;
+                            return;
                         }
                         const coordinates: number[] = []
                         for (let i = 0; i < tokens.length - 1; i++) {
@@ -68,13 +68,14 @@ class EdgeList extends Component<EdgeListProps, EdgeListState> {
                             // user
                             if (isNaN(num)) {
                                 alert("Coordinates must be numbers")
+                                return;
                             }
 
                             // If any of the coordinates are out of bounds, an alert is
                             // shown to the user
                             if (num < 0 || num > 4000) {
                                 alert("Coordinates should be between 0 and 4000 inclusive")
-                                break;
+                                return;
                             }
                             coordinates.push(num)
                         }

@@ -31,3 +31,22 @@ file was empty.
     width: 800px;
     height: 600px;
 }
+
+h1 {
+    text-align: center
+}
+
+#Buildings {
+    text-align: center;
+    margin: 5px;
+}
+
+#path {
+    text-align: center;
+    margin: 5px;
+}
+
+#distance {
+    text-align: center;
+    margin: 5px;
+}

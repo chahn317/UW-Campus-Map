@@ -13,15 +13,66 @@ import React, {Component} from 'react';
 
 // Allows us to write CSS styles inside App.css, any styles will apply to all components inside <App />
 import "./App.css";
+import Edge from "./Edge";
+import Map from './Map'
+import Path from "./Paths";
+import Distance from "./Distance";
+import BuildingsList from "./BuildingsList";
+import Colors from "./Colors";
 
-class App extends Component<{}, {}> {
-
-    render() {
-        return (
-            <p>Here's the beginning of your AMAZING CampusPaths GUI!</p>
-        );
-    }
-
+/**
+ * The state of the app. It stores the path drawn by the user.
+ */
+interface AppState {
+    path: Edge[]
+    color: string
+    cost: number
+    show: boolean
 }
 
-export default App;
+/**
+ * A class representing the Campus Path Finder app.
+ */
+export default class App extends Component<{}, AppState> {
+
+    /**
+     * Constructs a new app
+     * @param props - Properties for the app
+     */
+    constructor(props: any) {
+        super(props);
+        this.state = {
+            path: [],
+            color: "black",
+            cost: 0,
+            show: false
+        };
+    }
+
+    /**
+     * Renders the entire app
+     */
+    render() {
+        return (
+            <div>
+                <h1 id="app-title">Campus Path Finder</h1>
+                <Path show = {this.state.show}
+                    onChange={(value: Edge[], userColor: string, distance: number, toggle: boolean) => {
+                        this.setState({path: value, color: userColor, cost: distance, show: toggle})
+                    }}
+                />
+                <Map edges={this.state.path} color = {this.state.color}/>
+                <Distance cost={this.state.cost}/>
+                <br/>
+                <BuildingsList show = {this.state.show}
+                               onChange={(toggle: boolean) => {
+                                   this.setState({show: toggle})
+                               }
+
+                }/>
+                <br/>
+                <Colors/>
+            </div>
+        );
+    }
+}

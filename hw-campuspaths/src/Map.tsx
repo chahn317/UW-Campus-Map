@@ -10,11 +10,12 @@
  */
 
 import { LatLngExpression } from "leaflet";
-import React, { Component } from "react";
-import { MapContainer, TileLayer } from "react-leaflet";
+import React, {Component, createRef} from "react";
+import {MapContainer, TileLayer } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
 import MapLine from "./MapLine";
 import { UW_LATITUDE_CENTER, UW_LONGITUDE_CENTER } from "./Constants";
+import Edge from "./Edge";
 
 // This defines the location of the map. These are the coordinates of the UW Seattle campus
 const position: LatLngExpression = [UW_LATITUDE_CENTER, UW_LONGITUDE_CENTER];
@@ -24,13 +25,28 @@ const position: LatLngExpression = [UW_LATITUDE_CENTER, UW_LONGITUDE_CENTER];
 // with your hw-lines Map
 
 interface MapProps {
-  // TODO: Define the props of this component.
+    edges: Edge[]
+    color: string
 }
 
-interface MapState {}
+interface MapState {
+    mapRef: any
+}
 
 class Map extends Component<MapProps, MapState> {
+
   render() {
+    const lines: JSX.Element[] = []
+    for (let i: number = 0; i < this.props.edges.length; i++) {
+      const edge: Edge = this.props.edges[i];
+      lines.push(<MapLine key = {i}
+                          color={this.props.color}
+                          x1={edge.x1}
+                          y1={edge.y1}
+                          x2={edge.x2}
+                          y2={edge.y2}/>)
+    }
+
     return (
       <div id="map">
         <MapContainer
@@ -43,10 +59,11 @@ class Map extends Component<MapProps, MapState> {
             url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
           />
           {
-            // TODO: Render map lines here using the MapLine component. E.g.
+            // DONE: Render map lines here using the MapLine component. E.g.
             // <MapLine key="key1" color="red" x1={1000} y1={1000} x2={2000} y2={2000}/>
             // will draw a red line from the point 1000,1000 to 2000,2000 on the
             // map. Note that key should be a unique key that only this MapLine has.
+              lines
           }
         </MapContainer>
       </div>

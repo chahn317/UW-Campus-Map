@@ -1,9 +1,24 @@
-CSE 331 Homework Answers:
+CSE 331 Homework Answers: HW9
 
-Your Name:
+Your Name: Christina Hahn
 
 List any additional features or functionality you implemented
 in your CampusPaths application below. Only things listed here
 will be considered for extra credit.
 
+1. Users have the option to change the color of the line by typing the
+color after the two buildings. If they decide not to, the default color
+is black.
+
+2. When a path is drawn, the distance in feet/miles is shown, as well as
+the time it takes to get there by foot or bike. These statistics are not
+shown when the path's cost is 0.
+
+3. At the bottom of the page, there is an option to see a list of all
+available buildings on campus, and an option to hide the list when it
+is visible.
+
+4. At the bottom of the page, there is an option to see a list of all
+available line colors, which does this by navigating to a different
+web page.
 
