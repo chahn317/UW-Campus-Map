@@ -85,7 +85,9 @@ public class SparkServer {
                     String line = shortName + ": " + buildings.get(shortName);
                     names.add(line);
                 }
-                return gson.toJson(names.toArray());
+                Object[] buildingNames = names.toArray();
+                Arrays.sort(buildingNames);
+                return gson.toJson(buildingNames);
             }
         });
     }
