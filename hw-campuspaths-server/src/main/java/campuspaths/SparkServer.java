@@ -20,8 +20,15 @@ import java.util.*;
 
 import com.google.gson.Gson;
 
+/**
+ * This class handles requests made from the React application to the Spark Java server
+ */
 public class SparkServer {
 
+    /**
+     * Method handling requests between React and Spark Java
+     * @param args - Array of command-line arguments
+     */
     public static void main(String[] args) {
         CORSFilter corsFilter = new CORSFilter();
         corsFilter.apply();

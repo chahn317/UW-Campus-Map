@@ -63,8 +63,9 @@ export default class Path extends Component<PathProps, PathState> {
                         let color: string = "black"
                         if (tokens.length >= 3) {
                             color = tokens[2].trim()
+                            // If the color is invalid, an alert is shown to the user
                             if (!this.isValidColor(color)) {
-                                alert("The color is not valid.")
+                                alert("The color is not valid. There is a list available at the bottom of the page.")
                                 return
                             }
                         }
@@ -72,13 +73,13 @@ export default class Path extends Component<PathProps, PathState> {
                         let response2 = await fetch(`http://localhost:4567/cost?start=${start}&end=${end}`)
                         if (!response.ok) {
                             // If invalid buildings are entered, an alert is shown to the user
-                            alert("Please enter two valid buildings. There is a list available at the bottom of the page.")
+                            alert("Please enter two valid buildings using proper formatting. There is a list available at the bottom of the page.")
                             return
                         }
                         this.props.onChange(await response.json() as Edge[], color, await response2.json() as number, this.props.show)
                     } catch (e) {
                         // If an exception is somehow thrown, an alert is shown to the user
-                        alert("Please enter two valid buildings. There is a list available at the bottom of the page.")
+                        alert("Please enter two valid buildings using proper formatting. There is a list available at the bottom of the page.")
                     }
                 }}>Path</button>
 
